@@ -1,6 +1,7 @@
 package files;
 
 import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
 import databases.DBCsvConnection;
 
 import java.io.*;
@@ -25,7 +26,7 @@ public class CSVConnection {
                     text = bf.readLine();
                     readFile(text);
                 } else if (text.matches("[wW]")) {
-                    System.out.print("Enter your filename to write: ");
+                    System.out.print("Enter your filename to write file: ");
                     text = bf.readLine();
                     writeFile(text);
                 } else if (text.matches("[sS]")) {
@@ -73,18 +74,28 @@ public class CSVConnection {
             file = new File(filename);
             file.createNewFile();
             FileWriter writer = new FileWriter(file);
-            writer.write("@relation dataTechnology\n\n");
+            writer.write("@relation datatechnology\n\n");
             for (int i = 0; i < attribute.length; i++) {
+                if (attribute[i].contains("#")){
+                    attribute[i] = attribute[i].substring(1);
+                }
                 writer.write("@attribute " + attribute[i] + " {yes, no}\n");
             }
             writer.write("\n");
             writer.write("@data\n");
+
+            CSVWriter csvWriter = new CSVWriter(new FileWriter("data.csv"));
+            String line = "";
             for (int i = 0; i < mapData.length; i++) {
                 for (int j = 0; j < attribute.length; j++) {
                     if (j < 14) {
+                        line = line+mapData[i][j]+",";
                         writer.write(mapData[i][j] + ",");
                     } else if (j == 14) {
+                        line = line+mapData[i][j] + "\n";
                         writer.write(mapData[i][j] + "\n");
+                        String[] record = line.split(",");
+                        csvWriter.writeNext(record);
                     }
                 }
             }
@@ -95,6 +106,8 @@ public class CSVConnection {
             e.printStackTrace();
         }
     }
+
+
 
     public static void showFile(String filename) {
         try {

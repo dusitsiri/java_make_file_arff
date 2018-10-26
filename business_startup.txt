@@ -1,4 +1,4 @@
-@relation dataTechnology
+@relation datatechnology
 
 @attribute business {yes, no}
 @attribute startup {yes, no}
@@ -12,7 +12,7 @@
 @attribute life {yes, no}
 @attribute entrepreneur {yes, no}
 @attribute innovation {yes, no}
-@attribute #ai {yes, no}
+@attribute ai {yes, no}
 @attribute data {yes, no}
 @attribute social {yes, no}
 
